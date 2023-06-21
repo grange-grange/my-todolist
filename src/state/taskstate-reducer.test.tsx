@@ -2,7 +2,13 @@ import React from 'react';
 import {v1} from "uuid";
 import {TaskStateType} from "../App";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
-import {addTaskAC, changeTaskIsDoneAC, changeTaskTitleAC, removeTaskAC, taskStateReducer} from "./taskstate-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    taskStateReducer
+} from "./taskstate-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -52,8 +58,8 @@ test('changing task title', () => {
     expect(endState[todolistId2][2].title).toBe('fds')
 })
 
-test('changing task isdone', () => {
-    const endState = taskStateReducer(startState, changeTaskIsDoneAC(todolistId1, '2', true))
+test('changing task status', () => {
+    const endState = taskStateReducer(startState, changeTaskStatusAC(todolistId1, '2', true))
     expect(endState[todolistId1][1].isDone).toBe(true)
     expect(endState[todolistId2][1].isDone).toBe(false)
 })

@@ -1,0 +1,8 @@
+.App {
+  text-align: center;
+}
+
+.todolist {
+  display: inline-block;
+  margin: 0 30px;
+}
