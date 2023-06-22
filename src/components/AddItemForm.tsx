@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import s from "../App.module.css";
 import {Button, TextField, ButtonProps, styled} from "@mui/material";
 import {purple} from "@mui/material/colors";
@@ -40,7 +40,9 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
         setValue('')
     }
-
+    const addTaskPressingEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') addTask()
+    }
 
     return (
         <div className={s.AddItemForm}>
@@ -50,11 +52,12 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
+                onKeyDown={addTaskPressingEnter}
                 variant="outlined"
                 size='small'
                 helperText={error}
                 sx={{
-                    minWidth: "238px",
+                    minWidth: "230px",
                     minHeight: 40,
                 }}
             />

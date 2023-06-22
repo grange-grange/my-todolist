@@ -32,9 +32,9 @@
 .AddItemForm {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
-  padding-left: 10px;
-  width: 290px;
+  padding: 0 10px;
+  width: 280px;
+  margin: 5px 0;
 }
 
 
