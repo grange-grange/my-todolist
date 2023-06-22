@@ -1,6 +1,11 @@
 import React from 'react';
+import s from '../App.module.css'
 import {FilterValueType, TaskType} from "../App";
 import {Task} from "./Task";
+import {red} from "@mui/material/colors";
+import {IconButton} from "@mui/material";
+import {AddItemForm} from "./AddItemForm";
+import CloseIcon from '@mui/icons-material/Close';
 
 type TodolistPropsType = {
     id: string,
@@ -25,9 +30,27 @@ export const Todolist = (props: TodolistPropsType) => {
 
     return (
         <div>
-            <h2>{props.title}</h2>
-            <button onClick={removeTodolist}>x</button>
-            <input/>
+            <div className={s.tdl_header}>
+                <span className={s.tdl_title}>{props.title}</span>
+                <IconButton className={s.removeBtn}
+                            aria-label="delete"
+                            size="medium"
+                            onClick={removeTodolist}
+                >
+                    <CloseIcon
+                        fontSize="medium"
+                        sx={{
+                            color: red[800],
+                            backgroundImage: 'none'
+                        }}
+                    />
+                </IconButton>
+            </div>
+            <AddItemForm
+                label={'Add task'}
+                tdlId={props.id}
+                addTask={props.addTask}
+            />
             <div>
                 {props.tasks.map(t => {
                     return <Task

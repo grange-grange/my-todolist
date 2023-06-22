@@ -1,6 +1,6 @@
 import {Checkbox, IconButton} from '@mui/material';
 import React from 'react';
-import {FilterValueType, TaskType} from "../App";
+import s from '../App.module.css'
 import {purple} from "@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -22,8 +22,8 @@ export const Task = (props: TaskPropsType) => {
 
 
     return (
-        <div>
-            <Checkbox
+        <div className={s.task}>
+            <Checkbox className={s.checkbox}
                 checked={props.status}
                 onChange={changeTaskStatus}
                 inputProps={{'aria-label': 'controlled'}}
@@ -37,8 +37,8 @@ export const Task = (props: TaskPropsType) => {
                     }
                 }}
             />
-            <h3>{props.title}</h3>
-            <IconButton
+            <span className={s.task_title}>{props.title}</span>
+            <IconButton className={s.removeBtn}
                 aria-label="delete"
                 size="medium"
                 onClick={removeTask}

@@ -10,6 +10,7 @@ import {
     removeTodolistAC
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/taskstate-reducer";
+import {AddItemForm} from "./components/AddItemForm";
 
 export type FilterValueType = 'all' | 'completed' | 'active'
 
@@ -35,7 +36,7 @@ function App() {
 
     const dispatch = useDispatch()
 
-    const addTodolist = (id: string, title: string) => dispatch(addTodolistAC(id, title))
+    const addTodolist = (title: string) => dispatch(addTodolistAC(title))
     const removeTodolist = (id: string) => dispatch(removeTodolistAC(id))
     const changeTodolistTitle = (id: string, title: string) => dispatch(changeTodolistTitleAC(id, title))
     const changeTodolistFilter = (id: string, filter: FilterValueType) => dispatch(changeTodolistFilterAC(id, filter))
@@ -47,7 +48,9 @@ function App() {
 
 
     return (
-        <div className="App">
+        <div className={s.App}>
+            <AddItemForm label={'Add new todolist'} addTodolist={addTodolist} />
+
             {todolistState.map(tdl => {
                 return <div className={s.todolist}>
                     <Todolist

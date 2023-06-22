@@ -24,8 +24,7 @@ beforeEach(() => {
 })
 
 test('adding tdl', () => {
-    let todolistId3 = v1()
-    const endState = todolistsReducer(startState, addTodolistAC(todolistId3, 'To pay'))
+    const endState = todolistsReducer(startState, addTodolistAC('To pay'))
     expect(endState.length).toBe(3)
     expect(endState[2].id).toBe(todolistId2)
 })

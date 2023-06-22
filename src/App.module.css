@@ -1,8 +1,41 @@
 .App {
   text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .todolist {
+  width: 300px;
   display: inline-block;
-  margin: 0 30px;
+  vertical-align: top;
+  margin: 30px;
+  border: 2px solid #555555;
+  border-radius: 7px;
+  padding: 10px;
+  text-align: left;
+  background-color: snow;
 }
+.tdl_header {
+  display: flex;
+  padding-left: 10px;
+  justify-content: space-between;
+  height: 45px;
+}
+.tdl_title {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 700;
+  color: #350d4d;
+  line-height: 45px;
+  vertical-align: middle;
+}
+
+.AddItemForm {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding-left: 10px;
+  width: 290px;
+}
+
+
+
