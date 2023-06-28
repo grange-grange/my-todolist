@@ -1,6 +1,6 @@
 import React from 'react';
 import s from '../App.module.css'
-import {FilterValueType, maxTaskTitleLength, TaskType} from "../App";
+import {FilterValueType, maxTaskTitleLength, maxTdlTitleLength, TaskType} from "../App";
 import {Task} from "./Task";
 import {red} from "@mui/material/colors";
 import {IconButton} from "@mui/material";
@@ -35,7 +35,7 @@ export const Todolist = (props: TodolistPropsType) => {
             <div className={s.tdl_header}>
                 <EditableSpan
                     className={s.tdl_title}
-                    maxTitleLength={17}
+                    maxTitleLength={maxTdlTitleLength}
                     title={props.title}
                     changeTitle={changeTitle}
                 />

@@ -4,6 +4,7 @@ import s from '../App.module.css'
 import {purple} from "@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {EditableSpan} from "./EditableSpan";
+import {maxTaskTitleLength} from "../App";
 
 type TaskPropsType = {
     tdlId: string,
@@ -40,7 +41,7 @@ export const Task = (props: TaskPropsType) => {
             />
             <EditableSpan
                 className={s.task_title}
-                maxTitleLength={25}
+                maxTitleLength={maxTaskTitleLength}
                 title={props.title}
                 changeTitle={changeTaskTitle}
             />

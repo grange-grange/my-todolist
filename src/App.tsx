@@ -33,7 +33,7 @@ export type TaskStateType = {
 }
 
 export const maxTdlTitleLength = 20
-export const maxTaskTitleLength = 20
+export const maxTaskTitleLength = 25
 
 function App() {
     const todolistState = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
