@@ -14,6 +14,8 @@ import {AddItemForm} from "./components/AddItemForm";
 
 export type FilterValueType = 'all' | 'completed' | 'active'
 
+export type ErrorType = '' | 'Title is too long' | 'Please enter title'
+
 export type TodolistType = {
     id: string,
     title: string,
@@ -29,6 +31,9 @@ export type TaskType = {
 export type TaskStateType = {
     [key: string]: TaskType[]
 }
+
+export const maxTdlTitleLength = 20
+export const maxTaskTitleLength = 20
 
 function App() {
     const todolistState = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
@@ -49,7 +54,11 @@ function App() {
 
     return (
         <div className={s.App}>
-            <AddItemForm label={'Add new todolist'} addTodolist={addTodolist} />
+            <AddItemForm
+                label={'Add new todolist'}
+                maxTitleLength={maxTdlTitleLength}
+                addTodolist={addTodolist}
+            />
 
             {todolistState.map(tdl => {
                 return <div className={s.todolist}>

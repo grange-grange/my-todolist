@@ -18,15 +18,22 @@
   display: flex;
   padding-left: 10px;
   justify-content: space-between;
-  height: 45px;
+  position: relative;
+  min-height: 45px;
 }
 .tdl_title {
   display: inline-block;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #350d4d;
   line-height: 45px;
   vertical-align: middle;
+}
+.tdl_header input {
+  font-family: 'Open Sans', sans-serif;
+  width: 230px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .AddItemForm {
@@ -36,6 +43,7 @@
   width: 280px;
   margin: 5px 0;
 }
+
 
 
 

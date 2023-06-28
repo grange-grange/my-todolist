@@ -3,9 +3,11 @@ import s from "../App.module.css";
 import {Button, TextField, ButtonProps, styled} from "@mui/material";
 import {purple} from "@mui/material/colors";
 import AddIcon from '@mui/icons-material/Add';
+import {ErrorType} from "../App";
 
 type AddItemFormPropsType = {
     label: string
+    maxTitleLength: number
     addTodolist?: (title: string) => void,
     tdlId?: string,
     addTask?: (tdlId: string, title: string) => void
@@ -13,14 +15,11 @@ type AddItemFormPropsType = {
 
 export const AddItemForm = (props: AddItemFormPropsType) => {
     let [value, setValue] = useState<string>('')
-    type ErrorType = '' | 'Title is too long' | 'Please enter title'
     let [error, setError] = useState<ErrorType>('')
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget)
         setValue(e.currentTarget.value)
-        console.log(value)
-        if (e.currentTarget.value.trim().length > 25) {
+        if (e.currentTarget.value.trim().length > props.maxTitleLength) {
             setError('Title is too long')
         } else {
             setError('')

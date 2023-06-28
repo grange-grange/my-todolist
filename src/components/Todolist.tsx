@@ -1,11 +1,12 @@
 import React from 'react';
 import s from '../App.module.css'
-import {FilterValueType, TaskType} from "../App";
+import {FilterValueType, maxTaskTitleLength, TaskType} from "../App";
 import {Task} from "./Task";
 import {red} from "@mui/material/colors";
 import {IconButton} from "@mui/material";
 import {AddItemForm} from "./AddItemForm";
 import CloseIcon from '@mui/icons-material/Close';
+import {EditableSpan} from "./EditableSpan";
 
 type TodolistPropsType = {
     id: string,
@@ -27,15 +28,24 @@ type TodolistPropsType = {
 export const Todolist = (props: TodolistPropsType) => {
 
     const removeTodolist = () => props.removeTodolist(props.id)
+    const changeTitle = (newTitle: string) => props.changeTodolistTitle(props.id, newTitle)
 
     return (
         <div>
             <div className={s.tdl_header}>
-                <span className={s.tdl_title}>{props.title}</span>
-                <IconButton className={s.removeBtn}
-                            aria-label="delete"
-                            size="medium"
+                <EditableSpan
+                    className={s.tdl_title}
+                    maxTitleLength={17}
+                    title={props.title}
+                    changeTitle={changeTitle}
+                />
+                <IconButton size="medium"
                             onClick={removeTodolist}
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                top: 0,
+                            }}
                 >
                     <CloseIcon
                         fontSize="medium"
@@ -48,6 +58,7 @@ export const Todolist = (props: TodolistPropsType) => {
             </div>
             <AddItemForm
                 label={'Add task'}
+                maxTitleLength={maxTaskTitleLength}
                 tdlId={props.id}
                 addTask={props.addTask}
             />
