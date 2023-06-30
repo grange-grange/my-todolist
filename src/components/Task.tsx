@@ -1,7 +1,7 @@
 import {Checkbox, IconButton} from '@mui/material';
 import React from 'react';
 import s from '../App.module.css'
-import {purple} from "@mui/material/colors";
+import {grey, purple} from "@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {EditableSpan} from "./EditableSpan";
 import {maxTaskTitleLength} from "../App";
@@ -40,7 +40,7 @@ export const Task = (props: TaskPropsType) => {
                       }}
             />
             <EditableSpan
-                className={s.task_title}
+                className={props.status ? s.task_isDone : ''}
                 maxTitleLength={maxTaskTitleLength}
                 title={props.title}
                 changeTitle={changeTaskTitle}
@@ -51,9 +51,9 @@ export const Task = (props: TaskPropsType) => {
                         onClick={removeTask}
             >
                 <DeleteIcon
-                    fontSize="medium"
+                    fontSize="small"
                     sx={{
-                        color: purple[800]
+                        color: grey,
                     }}
                 />
             </IconButton>
