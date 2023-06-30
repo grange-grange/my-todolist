@@ -44,6 +44,15 @@
   margin: 5px 0;
 }
 
+.filter {
+  text-align: center;
+  margin: 5px auto;
+}
+
+.filter button {
+  width: 93px;
+}
+
 
 
 

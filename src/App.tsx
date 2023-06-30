@@ -12,7 +12,7 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/taskstate-reducer";
 import {AddItemForm} from "./components/AddItemForm";
 
-export type FilterValueType = 'all' | 'completed' | 'active'
+export type FilterValueType = 'all' | 'active' | 'completed'
 
 export type ErrorType = '' | 'Title is too long' | 'Please enter title'
 
@@ -61,13 +61,21 @@ function App() {
             />
 
             {todolistState.map(tdl => {
+                let filteredTasks = taskState[tdl.id]
+                if (tdl.filter === 'active') {
+                    filteredTasks = filteredTasks.filter(t => !t.isDone)
+                }
+                if (tdl.filter === 'completed') {
+                    filteredTasks = filteredTasks.filter(t => t.isDone)
+                }
+
                 return <div className={s.todolist}>
                     <Todolist
                         id={tdl.id}
                         title={tdl.title}
                         filter={tdl.filter}
 
-                        tasks={taskState[tdl.id]}
+                        tasks={filteredTasks}
 
                         removeTodolist={removeTodolist}
                         changeTodolistTitle={changeTodolistTitle}

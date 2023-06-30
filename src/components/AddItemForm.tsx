@@ -35,11 +35,11 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         } else if (props.addTodolist) {
             props.addTodolist(value)
         } else if (props.tdlId && props.addTask) {
-             props.addTask(props.tdlId, value)
+            props.addTask(props.tdlId, value)
         }
         setValue('')
     }
-    const addTaskPressingEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') addTask()
     }
 
@@ -51,7 +51,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                onKeyDown={addTaskPressingEnter}
+                onKeyDown={onKeyDown}
                 variant="outlined"
                 size='small'
                 helperText={error}

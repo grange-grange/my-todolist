@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import s from '../App.module.css'
 import {FilterValueType, maxTaskTitleLength, maxTdlTitleLength, TaskType} from "../App";
 import {Task} from "./Task";
 import {red} from "@mui/material/colors";
-import {IconButton} from "@mui/material";
+import {IconButton, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {AddItemForm} from "./AddItemForm";
 import CloseIcon from '@mui/icons-material/Close';
 import {EditableSpan} from "./EditableSpan";
@@ -26,9 +26,13 @@ type TodolistPropsType = {
 }
 
 export const Todolist = (props: TodolistPropsType) => {
-
     const removeTodolist = () => props.removeTodolist(props.id)
-    const changeTitle = (newTitle: string) => props.changeTodolistTitle(props.id, newTitle)
+    const changeTitle = (newTitle: string) => {
+        props.changeTodolistTitle(props.id, newTitle)
+    }
+    const changeFilter = (e: MouseEvent<HTMLElement>, value: FilterValueType) => {
+        props.changeTodolistFilter(props.id, value)
+    }
 
     return (
         <div>
@@ -76,6 +80,20 @@ export const Todolist = (props: TodolistPropsType) => {
                         changeTaskStatus={props.changeTaskStatus}
                     />
                 })}
+            </div>
+            <div className={s.filter}>
+                <ToggleButtonGroup
+                    color="secondary"
+                    value={props.filter}
+                    exclusive
+                    onChange={changeFilter}
+                    aria-label="Platform"
+                    size="small"
+                >
+                    <ToggleButton value="all">All</ToggleButton>
+                    <ToggleButton value="active">Active</ToggleButton>
+                    <ToggleButton value="completed">Completed</ToggleButton>
+                </ToggleButtonGroup>
             </div>
         </div>
     );
