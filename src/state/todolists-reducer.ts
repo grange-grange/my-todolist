@@ -18,7 +18,7 @@ const initialState: TodolistType[] = [
     {id: todolistId2, title: 'To learn', filter: 'all'}
 ]
 
-export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionType) => {
+export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionType): TodolistType[] => {
     switch (action.type) {
         case 'ADD-TODOLIST':
             return [{id: action.id, title: action.title, filter: 'all'}, ...state]

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {TextField} from "@mui/material";
 import {ErrorType} from "../App";
 
@@ -9,7 +9,7 @@ type EditableSpanPropsType = {
     changeTitle: (newTitle: string) => void
 }
 
-export const EditableSpan = (props: EditableSpanPropsType) => {
+export const EditableSpan = memo((props: EditableSpanPropsType) => {
     let [editMode, setEditMode] = useState<boolean>(false)
     const editModeOn = () => {
         setEditMode(true)
@@ -68,5 +68,5 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
             onDoubleClick={editModeOn}>
             {props.title}
         </span>;
-};
+});
 

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, memo} from 'react';
 import s from "../App.module.css";
 import {Button, TextField, ButtonProps, styled} from "@mui/material";
 import {purple} from "@mui/material/colors";
@@ -10,13 +10,12 @@ type AddItemFormPropsType = {
     maxTitleLength: number
     addTodolist?: (title: string) => void,
     tdlId?: string,
-    addTask?: (tdlId: string, title: string) => void
+    addTask?: (title: string) => void
 }
 
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
     let [value, setValue] = useState<string>('')
     let [error, setError] = useState<ErrorType>('')
-
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
         if (e.currentTarget.value.trim().length > props.maxTitleLength) {
@@ -35,7 +34,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         } else if (props.addTodolist) {
             props.addTodolist(value)
         } else if (props.tdlId && props.addTask) {
-            props.addTask(props.tdlId, value)
+            props.addTask(value)
         }
         setValue('')
     }
@@ -75,7 +74,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             </ColorButton>
         </div>
     );
-};
+});
 
 const ColorButton = styled(Button)<ButtonProps>(({theme}) => ({
     color: theme.palette.getContrastText(purple[500]),

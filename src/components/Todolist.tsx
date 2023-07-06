@@ -1,47 +1,48 @@
-import React, {MouseEvent} from 'react';
+import React, {memo, MouseEvent, useCallback} from 'react';
 import s from '../App.module.css'
-import {FilterValueType, maxTaskTitleLength, maxTdlTitleLength, TaskType} from "../App";
+import {FilterValueType, maxTaskTitleLength, maxTdlTitleLength, TaskType, TodolistType} from "../App";
 import {Task} from "./Task";
 import {red} from "@mui/material/colors";
 import {IconButton, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {AddItemForm} from "./AddItemForm";
 import CloseIcon from '@mui/icons-material/Close';
 import {EditableSpan} from "./EditableSpan";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../state/store";
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
+import {addTaskAC} from "../state/taskstate-reducer";
 
 type TodolistPropsType = {
-    id: string,
-    title: string,
-    filter: FilterValueType,
-
-    tasks: TaskType[]
-
-    removeTodolist: (id: string) => void,
-    changeTodolistTitle: (id: string, title: string) => void,
-    changeTodolistFilter: (id: string, filter: FilterValueType) => void,
-
-    addTask: (tdlId: string, title: string) => void,
-    removeTask: (tdlId: string, id: string) => void,
-    changeTaskTitle: (tdlId: string, id: string, title: string) => void,
-    changeTaskStatus: (tdlId: string, id: string, status: boolean) => void
+    id: string
 }
 
-export const Todolist = (props: TodolistPropsType) => {
-    const removeTodolist = () => props.removeTodolist(props.id)
-    const changeTitle = (newTitle: string) => {
-        props.changeTodolistTitle(props.id, newTitle)
+export const Todolist = memo((props: TodolistPropsType) => {
+    const todolist = useSelector<AppRootStateType, TodolistType>(state => state.todolists.filter(tdl => tdl.id === props.id)[0])
+    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolist.id])
+    const dispatch = useDispatch()
+
+    const removeTodolist = () => dispatch(removeTodolistAC(todolist.id))
+    const changeTodolistFilter = (e: MouseEvent<HTMLElement>, value: FilterValueType) => dispatch(changeTodolistFilterAC(todolist.id, value))
+    const changeTodolistTitle = useCallback((newTitle: string) => dispatch(changeTodolistTitleAC(todolist.id, newTitle)), [dispatch])
+
+    let filteredTasks = tasks
+    if (todolist.filter === 'active') {
+        filteredTasks = tasks.filter(t => !t.isDone)
     }
-    const changeFilter = (e: MouseEvent<HTMLElement>, value: FilterValueType) => {
-        props.changeTodolistFilter(props.id, value)
+    if (todolist.filter === 'completed') {
+        filteredTasks = tasks.filter(t => t.isDone)
     }
 
+    const addTask = useCallback((title: string) => dispatch(addTaskAC(todolist.id, title)), [dispatch])
+
     return (
-        <div>
+        <div className={s.todolist}>
             <div className={s.tdl_header}>
                 <EditableSpan
                     className={s.tdl_title}
                     maxTitleLength={maxTdlTitleLength}
-                    title={props.title}
-                    changeTitle={changeTitle}
+                    title={todolist.title}
+                    changeTitle={changeTodolistTitle}
                 />
                 <IconButton size="medium"
                             onClick={removeTodolist}
@@ -64,30 +65,23 @@ export const Todolist = (props: TodolistPropsType) => {
                 label={'Add task'}
                 maxTitleLength={maxTaskTitleLength}
                 tdlId={props.id}
-                addTask={props.addTask}
+                addTask={addTask}
             />
             <div>
-                {props.tasks.map(t => {
+                {filteredTasks.map(t => {
                     return <Task
+                        key={t.id}
                         tdlId={props.id}
-
                         id={t.id}
-                        title={t.title}
-                        status={t.isDone}
-
-                        removeTask={props.removeTask}
-                        changeTaskTitle={props.changeTaskTitle}
-                        changeTaskStatus={props.changeTaskStatus}
                     />
                 })}
             </div>
             <div className={s.filter}>
                 <ToggleButtonGroup
                     color="secondary"
-                    value={props.filter}
+                    value={todolist.filter}
                     exclusive
-                    onChange={changeFilter}
-                    aria-label="Platform"
+                    onChange={changeTodolistFilter}
                     size="small"
                 >
                     <ToggleButton value="all">All</ToggleButton>
@@ -97,4 +91,4 @@ export const Todolist = (props: TodolistPropsType) => {
             </div>
         </div>
     );
-};
+})
